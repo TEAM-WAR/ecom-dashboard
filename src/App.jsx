@@ -2,17 +2,20 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Login';
+import Products from './pages/Products';
 import PlaceholderPage from './components/PlaceholderPage';
+import Category from './pages/Category';
+import StockTransactions from './pages/StockTransactions.JSX';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        
+
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/login" replace />} />
-          
+
           {/* Routes Gestion des Colis */}
           <Route path="colis">
             <Route path="suivi" element={<PlaceholderPage />} />
@@ -23,9 +26,9 @@ const App = () => {
 
           {/* Routes Stock & Produits */}
           <Route path="stock">
-            <Route path="produits" element={<PlaceholderPage />} />
-            <Route path="mouvements" element={<PlaceholderPage />} />
-            <Route path="categories" element={<PlaceholderPage />} />
+            <Route path="produits" element={<Products />} />
+            <Route path="mouvements" element={<StockTransactions />} />
+            <Route path="categories" element={<Category />} />
             <Route path="etat" element={<PlaceholderPage />} />
           </Route>
 
