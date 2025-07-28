@@ -6,6 +6,7 @@ import Products from './pages/Products';
 import PlaceholderPage from './components/PlaceholderPage';
 import Category from './pages/Category';
 import StockTransactions from './pages/StockTransactions.JSX';
+import Colis from './pages/Colis/Colis';
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
 
           {/* Routes Gestion des Colis */}
           <Route path="colis">
-            <Route path="suivi" element={<PlaceholderPage />} />
+            <Route path="suivi" element={<Colis />} />
             <Route path="scans" element={<PlaceholderPage />} />
             <Route path="historique" element={<PlaceholderPage />} />
             <Route path="retours" element={<PlaceholderPage />} />
