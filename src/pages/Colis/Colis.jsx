@@ -13,6 +13,7 @@ import apiClient from '../../services/apiClient';
 
 // Import des composants séparés
 import CreateColisModal from './CreateColisModal';
+import ReviewColisModal from './ReviewColisModal';
 import ColisFilters from './ColisFilters';
 import ColisTable from './ColisTable';
 import ColisStats from './ColisStats';
@@ -23,6 +24,8 @@ const Colis = () => {
     const [colis, setColis] = useState([]);
     const [loading, setLoading] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
+    const [reviewModalVisible, setReviewModalVisible] = useState(false);
+    const [colisData, setColisData] = useState(null);
     const [filters, setFilters] = useState({
         search: '',
         statut: '',
@@ -94,22 +97,51 @@ const Colis = () => {
         setModalVisible(false);
     };
 
-    // Handle form submission
+    // Handle form submission - Step 1: Get colis data from barcode
     const handleSubmit = async (values) => {
         try {
             // Pour la création, envoyer seulement le code-barres
             const createData = {
                 code_barre: values.code_barre
             };
-            await apiClient.post('/colis', createData);
-            message.success('Colis créé avec succès');
-            handleCancel();
-            fetchColis();
+            const response = await apiClient.post('/colis', createData);
+            console.log(response.data.data);
+            
+            // Store the colis data and show review modal
+            setColisData(response.data.data);
+            setModalVisible(false);
+            setReviewModalVisible(true);
         } catch (error) {
             const errorMessage = error.response?.data?.message || 'Échec de la création';
             message.error(errorMessage);
             console.error('Error:', error);
         }
+    };
+
+    // Handle review modal submission - Step 2: Confirm creation with edited data
+    const handleReviewSubmit = async (values) => {
+        try {
+            const confirmData = {
+                ...values,
+                code_barre: colisData.code_barre,
+                etat_str: colisData.etat_str
+            };
+            await apiClient.post('/colis/confirm', confirmData);
+            message.success('Colis créé avec succès');
+            setReviewModalVisible(false);
+            setColisData(null);
+            fetchColis();
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || 'Échec de la confirmation';
+            message.error(errorMessage);
+            console.error('Error:', error);
+        }
+    };
+
+    // Close review modal
+    const handleReviewCancel = () => {
+        setReviewModalVisible(false);
+        setColisData(null);
     };
 
     // Delete colis
@@ -202,6 +234,15 @@ const Colis = () => {
                     visible={modalVisible}
                     onCancel={handleCancel}
                     onSubmit={handleSubmit}
+                    loading={loading}
+                />
+
+                {/* Review Modal */}
+                <ReviewColisModal
+                    visible={reviewModalVisible}
+                    onCancel={handleReviewCancel}
+                    onSubmit={handleReviewSubmit}
+                    colisData={colisData}
                     loading={loading}
                 />
             </div>
