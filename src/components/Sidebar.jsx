@@ -249,7 +249,7 @@ const Sidebar = ({ collapsed, onCollapse, isMobile }) => {
       trigger={null}
     >
       <div style={headerStyle}>
-        {(!collapsed || isMobile) && <h1 style={titleStyle}>Menu de Navigation</h1>}
+        {(!collapsed || isMobile) && <h1 style={titleStyle}>Colixy</h1>}
         {!isMobile && (
           <div style={toggleButtonStyle} onClick={() => onCollapse(!collapsed)}>
             {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

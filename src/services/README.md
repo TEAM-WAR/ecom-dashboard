@@ -1,6 +1,6 @@
 # Services API
 
-Ce dossier contient tous les services API pour l'application e-commerce dashboard.
+Ce dossier contient tous les services API pour l'application Colixy.
 
 ## Structure
 
@@ -25,7 +25,7 @@ VITE_APP_API_URL=http://localhost:5000/api
 VITE_APP_API_KEY=your-api-key-here
 
 # App Configuration
-VITE_APP_NAME=E-commerce Dashboard
+VITE_APP_NAME=Colixy
 VITE_APP_VERSION=1.0.0
 ```
 

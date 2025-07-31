@@ -23,7 +23,7 @@ const Login = () => {
     }}>
       <Card style={{ width: 400, padding: '24px' }}>
         <h1 style={{ textAlign: 'center', marginBottom: '24px' }}>
-          Tableau de Bord E-commerce
+          Colixy
         </h1>
         <Form
           name="login"
