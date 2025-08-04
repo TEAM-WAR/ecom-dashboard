@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Products from './pages/Products';
 import PlaceholderPage from './components/PlaceholderPage';
 import Category from './pages/Category';
-import StockTransactions from './pages/StockTransactions.JSX';
+import StockTransactions from './pages/StockTransactions.jsx';
 import Colis from './pages/Colis/Colis';
 
 const App = () => {
