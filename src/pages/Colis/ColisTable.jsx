@@ -27,7 +27,7 @@ const ColisTable = ({ data, loading, onDelete }) => {
     // Expandable row configuration
     const expandedRowRender = (record) => {
         const products = record.Prodcuts || [];
-        
+
         if (products.length === 0) {
             return (
                 <Card size="small" style={{ margin: '0 16px' }}>
@@ -40,18 +40,18 @@ const ColisTable = ({ data, loading, onDelete }) => {
         }
 
         return (
-            <Card 
-                size="small" 
-                style={{ 
+            <Card
+                size="small"
+                style={{
                     margin: '0 16px',
                     borderRadius: '8px',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                 }}
             >
                 <div style={{ padding: '16px' }}>
-                    <div style={{ 
-                        marginBottom: '16px', 
-                        fontWeight: '600', 
+                    <div style={{
+                        marginBottom: '16px',
+                        fontWeight: '600',
                         color: '#1890ff',
                         fontSize: '14px',
                         display: 'flex',
@@ -60,14 +60,14 @@ const ColisTable = ({ data, loading, onDelete }) => {
                         <ShoppingOutlined style={{ marginRight: '8px', fontSize: '16px' }} />
                         Produits ({products.length})
                     </div>
-                    <div style={{ 
-                        maxHeight: '400px', 
+                    <div style={{
+                        maxHeight: '400px',
                         overflowY: 'auto',
                         borderRadius: '6px',
                         border: '1px solid #f0f0f0'
                     }}>
                         {products.map((product, index) => (
-                            <div 
+                            <div
                                 key={product._id || index}
                                 style={{
                                     display: 'flex',
@@ -92,19 +92,19 @@ const ColisTable = ({ data, loading, onDelete }) => {
                                             alt={product.prodcut_id.name}
                                             width={40}
                                             height={40}
-                                            style={{ 
-                                                objectFit: 'cover', 
+                                            style={{
+                                                objectFit: 'cover',
                                                 borderRadius: '6px',
                                                 border: '1px solid #e8e8e8'
                                             }}
                                             fallback="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAADDCAYAAADQvc6UAAABRWlDQ1BJQ0MgUHJvZmlsZQAAKJFjYGASSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8LAwSDCIMogwMCcmFxc4BgQ4ANUwgCjUcG3awyMIPqyLsis7PPOq3QdDFcvjV3jOD1boQVTPQrgSkktTgbSf4A4LbmgqISBgTEFyFYuLykAsTuAbJEioKOA7DkgdjqEvQHEToKwj4DVhAQ5A9k3gGyB5IxEoBmML4BsnSQk8XQkNtReEOBxcfXxUQg1Mjc0dyHgXNJBSWpFCYh2zi+oLMpMzyhRcASGUqqCZ16yno6CkYGRAQMDKMwhqj/fAIcloxgHQqxAjIHBEugw5sUIsSQpBobtQPdLciLEVJYzMPBHMDBsayhILEqEO4DxG0txmrERhM29nYGBddr//5/DGRjYNRkY/l7////39v///y4Dmn+LgeHANwDrkl1AuO+pmgAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAwqADAAQAAAABAAAAwwAAAAD9b/HnAAAHlklEQVR4Ae3dP3Ik1RnG4W+FgYxN"
                                         />
                                     ) : (
-                                        <div 
-                                            style={{ 
-                                                width: 40, 
-                                                height: 40, 
-                                                backgroundColor: '#f0f0f0', 
+                                        <div
+                                            style={{
+                                                width: 40,
+                                                height: 40,
+                                                backgroundColor: '#f0f0f0',
                                                 borderRadius: '6px',
                                                 display: 'flex',
                                                 alignItems: 'center',
@@ -116,17 +116,17 @@ const ColisTable = ({ data, loading, onDelete }) => {
                                         </div>
                                     )}
                                     <div style={{ marginLeft: '16px', flex: 1 }}>
-                                        <div style={{ 
-                                            fontWeight: '600', 
-                                            fontSize: '14px', 
+                                        <div style={{
+                                            fontWeight: '600',
+                                            fontSize: '14px',
                                             marginBottom: '4px',
                                             color: '#262626'
                                         }}>
                                             {product.prodcut_id?.name || 'Produit inconnu'}
                                         </div>
-                                        <div style={{ 
-                                            fontSize: '13px', 
-                                            color: '#595959', 
+                                        <div style={{
+                                            fontSize: '13px',
+                                            color: '#595959',
                                             marginBottom: '2px',
                                             display: 'flex',
                                             alignItems: 'center',
@@ -137,8 +137,8 @@ const ColisTable = ({ data, loading, onDelete }) => {
                                             <span>Qté: <strong>{product.quantity}</strong></span>
                                         </div>
                                         {product.prodcut_id?.description && (
-                                            <div style={{ 
-                                                fontSize: '12px', 
+                                            <div style={{
+                                                fontSize: '12px',
                                                 color: '#8c8c8c',
                                                 marginTop: '4px',
                                                 lineHeight: '1.4'
@@ -148,15 +148,15 @@ const ColisTable = ({ data, loading, onDelete }) => {
                                         )}
                                     </div>
                                 </div>
-                                <div style={{ 
-                                    display: 'flex', 
-                                    flexDirection: 'column', 
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
                                     alignItems: 'center',
                                     marginLeft: '16px'
                                 }}>
-                                    <Tag 
-                                        color="blue" 
-                                        style={{ 
+                                    <Tag
+                                        color="blue"
+                                        style={{
                                             margin: 0,
                                             fontSize: '12px',
                                             fontWeight: '600',
@@ -166,8 +166,8 @@ const ColisTable = ({ data, loading, onDelete }) => {
                                     >
                                         {product.quantity}
                                     </Tag>
-                                    <Text style={{ 
-                                        fontSize: '10px', 
+                                    <Text style={{
+                                        fontSize: '10px',
                                         color: '#8c8c8c',
                                         marginTop: '2px'
                                     }}>
@@ -219,8 +219,8 @@ const ColisTable = ({ data, loading, onDelete }) => {
             render: (designation) => {
                 if (!designation) return '-';
                 // Truncate to 50 characters and add ellipsis
-                const truncated = designation.length > 50 
-                    ? designation.substring(0, 50) + '...' 
+                const truncated = designation.length > 50
+                    ? designation.substring(0, 50) + '...'
                     : designation;
                 return (
                     <Tooltip title={designation} placement="topLeft">

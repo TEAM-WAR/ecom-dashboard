@@ -59,9 +59,9 @@ const Sidebar = ({ collapsed, onCollapse, isMobile }) => {
       label: 'Gestion des Colis',
       children: [
         { key: 'suivi', label: 'Suivi des colis', path: '/colis/suivi' },
+        { key: 'retours', label: 'Retours & récupération', path: '/colis/retours' },
         { key: 'scans', label: 'Scans & statuts', path: '/colis/scans' },
         { key: 'historique', label: 'Historique des livraisons', path: '/colis/historique' },
-        { key: 'retours', label: 'Retours & récupération', path: '/colis/retours' },
       ],
     },
     // 4. Financier - suivi des résultats
@@ -136,8 +136,8 @@ const Sidebar = ({ collapsed, onCollapse, isMobile }) => {
   const renderMenuItem = (item) => {
     if (item.children) {
       return (
-        <Menu.SubMenu 
-          key={item.key} 
+        <Menu.SubMenu
+          key={item.key}
           icon={
             <Tooltip placement="right" title={collapsed && !isMobile ? item.label : ''}>
               {item.icon}
@@ -150,7 +150,7 @@ const Sidebar = ({ collapsed, onCollapse, isMobile }) => {
           }}
         >
           {item.children.map((child) => (
-            <Menu.Item 
+            <Menu.Item
               key={child.key}
               style={{
                 fontFamily: "'Poppins', sans-serif",
@@ -167,8 +167,8 @@ const Sidebar = ({ collapsed, onCollapse, isMobile }) => {
       );
     }
     return (
-      <Menu.Item 
-        key={item.key} 
+      <Menu.Item
+        key={item.key}
         icon={
           <Tooltip placement="right" title={collapsed && !isMobile ? item.label : ''}>
             {item.icon}
@@ -239,7 +239,7 @@ const Sidebar = ({ collapsed, onCollapse, isMobile }) => {
   };
 
   return (
-    <Sider 
+    <Sider
       collapsible={!isMobile}
       collapsed={collapsed}
       onCollapse={onCollapse}

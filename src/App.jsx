@@ -7,6 +7,7 @@ import PlaceholderPage from './components/PlaceholderPage';
 import Category from './pages/Category';
 import StockTransactions from './pages/StockTransactions.JSX';
 import Colis from './pages/Colis/Colis';
+import ColisRetour from './pages/ColisRetour';
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
             <Route path="suivi" element={<Colis />} />
             <Route path="scans" element={<PlaceholderPage />} />
             <Route path="historique" element={<PlaceholderPage />} />
-            <Route path="retours" element={<PlaceholderPage />} />
+            <Route path="retours" element={<ColisRetour />} />
           </Route>
 
           {/* Routes Stock & Produits */}
