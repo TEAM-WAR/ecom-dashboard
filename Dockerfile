@@ -14,8 +14,7 @@ RUN npm ci && npm cache clean --force
 # Copy source code
 COPY . .
 
-# Set Node options for low-memory system
-ENV NODE_OPTIONS="--max-old-space-size=512 --optimize-for-size"
+# Build the application
 
 # Build the application with memory optimization for low-memory systems
 RUN npm run build
@@ -30,15 +29,15 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Create a non-root user
-RUN addgroup -g 1001 -S nginx
+RUN addgroup -g 1001 -S nginxgroup
 RUN adduser -S nginxuser -u 1001
 
 # Change ownership of nginx directories
-RUN chown -R nginxuser:nginx /var/cache/nginx && \
-    chown -R nginxuser:nginx /var/log/nginx && \
-    chown -R nginxuser:nginx /etc/nginx/conf.d
+RUN chown -R nginxuser:nginxgroup /var/cache/nginx && \
+    chown -R nginxuser:nginxgroup /var/log/nginx && \
+    chown -R nginxuser:nginxgroup /etc/nginx/conf.d
 RUN touch /var/run/nginx.pid && \
-    chown -R nginxuser:nginx /var/run/nginx.pid
+    chown -R nginxuser:nginxgroup /var/run/nginx.pid
 
 # Switch to non-root user
 USER nginxuser
