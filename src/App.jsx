@@ -10,11 +10,13 @@ import Colis from './pages/Colis/Colis';
 import ColisRetour from './pages/ColisRetour';
 
 const App = () => {
+  console.log("App");
+  
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-
+     
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Navigate to="/login" replace />} />
 
