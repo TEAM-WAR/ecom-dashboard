@@ -120,7 +120,6 @@ const ColisFilters = ({ filters, setFilters, onReset, onNewColis, onUpdatePendin
 
                         {
                             isRetour && (
-
                                 <Tooltip title="Créer un nouveau retour" placement="top" key="new-retour">
                                     <Button
                                         type="primary"
