@@ -1,151 +1,107 @@
-# Services API
+# Services Documentation
 
-Ce dossier contient tous les services API pour l'application Colixy.
+## Authentication Service
 
-## Structure
+The authentication system has been implemented with the following components:
 
+### Files Created/Modified:
+
+1. **`src/services/authService.js`** - API service for authentication operations
+2. **`src/contexts/AuthContext.jsx`** - React context for managing authentication state
+3. **`src/components/ProtectedRoute.jsx`** - Component for protecting routes
+4. **`src/pages/Login.jsx`** - Updated login page with actual authentication
+5. **`src/components/TopBar.jsx`** - Updated with logout functionality
+6. **`src/App.jsx`** - Updated with AuthProvider and ProtectedRoute
+
+### Features Implemented:
+
+#### Login Functionality
+- **Endpoint**: `POST /admin/login`
+- **Credentials**: Email/Telephone and Password
+- **Response**: JWT token stored as HTTP-only cookie
+- **Redirect**: After successful login, redirects to intended page or dashboard
+
+#### Authentication Verification
+- **Endpoint**: `GET /admin/verify`
+- **Purpose**: Verify if user is authenticated on app load
+- **Automatic**: Runs on every app initialization
+
+#### Protected Routes
+- All routes except `/login` are now protected
+- Unauthenticated users are redirected to login page
+- Loading state shown during authentication check
+
+#### Logout Functionality
+- **Endpoint**: `POST /admin/logout`
+- **Clears**: JWT cookie and local state
+- **Redirect**: Automatically redirects to login page
+
+#### User Profile Display
+- Shows authenticated user's name in TopBar
+- User information available throughout the app via AuthContext
+
+### Usage:
+
+#### Using the Auth Context:
+```javascript
+import { useAuth } from '../contexts/AuthContext';
+
+const MyComponent = () => {
+  const { user, isAuthenticated, login, logout } = useAuth();
+  
+  // Access user data
+  console.log(user?.name, user?.email);
+  
+  // Check authentication status
+  if (isAuthenticated) {
+    // User is logged in
+  }
+};
 ```
-services/
-├── apiClient.js          # Configuration Axios avec intercepteurs
-├── productService.js     # Services pour les produits
-├── categoryService.js    # Services pour les catégories
-├── index.js             # Export centralisé
-└── README.md            # Documentation
+
+#### Protecting Routes:
+```javascript
+import ProtectedRoute from '../components/ProtectedRoute';
+
+<Route path="/protected" element={
+  <ProtectedRoute>
+    <MyProtectedComponent />
+  </ProtectedRoute>
+} />
 ```
 
-## Configuration
+### Environment Variables Required:
 
-### Variables d'environnement
-
-Créez un fichier `.env` à la racine du projet avec les variables suivantes :
+Create a `.env` file in the root directory:
 
 ```env
 # API Configuration
-VITE_APP_API_URL=http://localhost:5000/api
-VITE_APP_API_KEY=your-api-key-here
-
-# App Configuration
-VITE_APP_NAME=Colixy
-VITE_APP_VERSION=1.0.0
+VITE_APP_API_URL=http://localhost:3000/api
+VITE_APP_API_KEY=your_api_key_here
 ```
 
-## Utilisation
+### Backend Integration:
 
-### Import des services
+The frontend expects the following backend endpoints:
 
-```javascript
-// Import d'un service spécifique
-import { productService } from '../services';
+- `POST /admin/login` - Login with email/telephone and password
+- `POST /admin/logout` - Logout and clear session
+- `GET /admin/verify` - Verify authentication status
+- `GET /admin/profile` - Get user profile (protected)
+- `PUT /admin/profile` - Update user profile (protected)
+- `PUT /admin/change-password` - Change password (protected)
 
-// Import de tous les services
-import { productService, categoryService, apiClient } from '../services';
-```
+### Security Features:
 
-### Exemples d'utilisation
+1. **HTTP-only Cookies**: JWT tokens stored securely
+2. **Automatic Token Verification**: Checks authentication on app load
+3. **Route Protection**: All routes except login are protected
+4. **Automatic Redirects**: Unauthenticated users redirected to login
+5. **Loading States**: Proper loading indicators during auth checks
 
-#### Produits
+### Error Handling:
 
-```javascript
-// Récupérer tous les produits
-const products = await productService.getAllProducts();
-
-// Récupérer avec filtres
-const filteredProducts = await productService.getAllProducts({
-  category: 'Electronics',
-  minPrice: 10,
-  maxPrice: 100,
-  inStock: true
-});
-
-// Créer un produit
-const newProduct = await productService.createProduct({
-  name: 'Nouveau produit',
-  price: 29.99,
-  category: 'Electronics',
-  description: 'Description du produit'
-});
-
-// Mettre à jour un produit
-const updatedProduct = await productService.updateProduct(productId, {
-  name: 'Produit modifié',
-  price: 39.99
-});
-
-// Supprimer un produit
-await productService.deleteProduct(productId);
-```
-
-#### Catégories
-
-```javascript
-// Récupérer toutes les catégories
-const categories = await categoryService.getAllCategories();
-
-// Créer une catégorie
-const newCategory = await categoryService.createCategory({
-  name: 'Nouvelle catégorie',
-  description: 'Description de la catégorie'
-});
-
-// Mettre à jour une catégorie
-const updatedCategory = await categoryService.updateCategory(categoryId, {
-  name: 'Catégorie modifiée'
-});
-
-// Supprimer une catégorie
-await categoryService.deleteCategory(categoryId);
-```
-
-## Fonctionnalités
-
-### Intercepteurs
-
-- **Request Interceptor** : Ajoute automatiquement la clé API dans les headers
-- **Response Interceptor** : Gère les erreurs HTTP et les redirections
-
-### Gestion d'erreurs
-
-Le service gère automatiquement :
-- Erreurs 401 (Non autorisé)
-- Erreurs 403 (Interdit)
-- Erreurs 404 (Non trouvé)
-- Erreurs 500 (Erreur serveur)
-- Erreurs de réseau
-
-### Credentials
-
-Les requêtes incluent automatiquement les credentials pour les requêtes cross-origin.
-
-## Ajout de nouveaux services
-
-Pour ajouter un nouveau service :
-
-1. Créez un nouveau fichier `newService.js`
-2. Importez `apiClient`
-3. Exportez les fonctions du service
-4. Ajoutez l'export dans `index.js`
-
-Exemple :
-
-```javascript
-// newService.js
-import apiClient from './apiClient';
-
-export const newService = {
-  getAll: async () => {
-    return apiClient.get('/endpoint');
-  },
-  
-  create: async (data) => {
-    return apiClient.post('/endpoint', data);
-  }
-};
-
-export default newService;
-```
-
-```javascript
-// index.js
-export { default as newService } from './newService';
-export { newService } from './newService';
-``` 
+- Network errors are caught and displayed to users
+- Authentication failures show appropriate error messages
+- Automatic logout on token expiration
+- Graceful fallbacks for missing user data 

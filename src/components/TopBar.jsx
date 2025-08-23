@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Avatar, Dropdown, Space, Badge } from 'antd';
+import { Layout, Avatar, Dropdown, Space, Badge, message } from 'antd';
 import { 
   UserOutlined, 
   BellOutlined, 
@@ -8,10 +8,28 @@ import {
   SearchOutlined,
   MenuOutlined
 } from '@ant-design/icons';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout;
 
 const TopBar = ({ onMenuClick, isMobile }) => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleMenuClick = async ({ key }) => {
+    if (key === 'logout') {
+      try {
+        await logout();
+        message.success('Déconnexion réussie');
+      } catch (error) {
+        message.error('Erreur lors de la déconnexion');
+      }
+    } else if (key === 'profile') {
+      navigate('/utilisateurs/profile');
+    }
+  };
+
   const userMenuItems = [
     {
       key: 'profile',
@@ -90,7 +108,8 @@ const TopBar = ({ onMenuClick, isMobile }) => {
         <Dropdown
           menu={{ 
             items: userMenuItems,
-            style: { fontFamily: "'Poppins', sans-serif" }
+            style: { fontFamily: "'Poppins', sans-serif" },
+            onClick: handleMenuClick
           }}
           trigger={['click']}
           placement="bottomRight"
@@ -111,7 +130,7 @@ const TopBar = ({ onMenuClick, isMobile }) => {
                 marginLeft: '8px',
                 fontSize: '14px',
                 fontWeight: 500,
-              }}>Admin</span>
+              }}>{user?.name || 'Admin'}</span>
             )}
           </Space>
         </Dropdown>
