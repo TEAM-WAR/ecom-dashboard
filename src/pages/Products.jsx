@@ -311,7 +311,7 @@ const Products = () => {
         dataIndex: 'category',
         key: 'category',
         render: (categoryId) => {
-          const category = categories.find(cat => cat._id === categoryId);
+          const category = categories.find(cat => cat._id === categoryId._id);
           return (
             <Tag color="blue">{category ? category.name : 'Unknown'}</Tag>
           );
